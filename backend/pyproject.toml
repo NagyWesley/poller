@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "poller"
+version = "0.1.0"
+description = "Poller - slido alternative"
+authors = ["Nagy Wesley"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.89.1"
+pydantic = "^1.10.4"
+uvicorn = "^0.20.0"
+websockets = "^10.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
