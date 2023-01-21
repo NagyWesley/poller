@@ -12,5 +12,4 @@ RUN poetry install
 
 COPY ./ /usr/src/app/
 
-CMD ["uvicorn", "app.main:main", "--host", "0.0.0.0", "--port", "8001", "--reload"]
-# CMD ["python","app/main.py"]
+CMD ["python","app/main.py"]

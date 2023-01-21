@@ -9,6 +9,7 @@ async def handler(websocket):
     while True:
         try:
             message = await websocket.recv()
+            print("message received")
         except websockets.ConnectionClosedOK:
             break
         print(message)
@@ -21,3 +22,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
+# get count of connected clients
