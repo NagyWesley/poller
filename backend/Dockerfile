@@ -12,4 +12,4 @@ RUN poetry install
 
 COPY ./ /usr/src/app/
 
-CMD ["python","app/main.py"]
+# CMD ["python","app/main.py"]

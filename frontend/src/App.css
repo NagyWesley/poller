@@ -1,5 +1,8 @@
+body {
+  direction: rtl;
+}
 .App {
-  text-align: center;
+  text-align: right;
 }
 
 .App-logo {
@@ -35,4 +38,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.question-body {
+  border: gray;
+  border-style: solid;
+  border-radius: 10px;
+  width: 75vw;
+  padding: 1vh 2vh 2vh 2vh;
+  margin: 1vh 0 1vh 0;
+}
+
+.main-btn {
+  margin: 1vh 0 1vh 0;
+  width: 30vw;
+  height: 3vh;
+  border-radius: 6px;
+  max-width: 120px;
 }

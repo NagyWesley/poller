@@ -9,7 +9,12 @@ readme = "README.md"
 python = "^3.11"
 websockets = "^10.4"
 watchdog = {extras = ["watchmedo"], version = "^2.2.1"}
+pydantic = "^1.10.4"
 
+
+[tool.poetry.group.dev.dependencies]
+autopep8 = "^2.0.1"
+isort = "^5.11.4"
 
 [build-system]
 requires = ["poetry-core"]
