@@ -1,10 +1,10 @@
-const parseMessage = (message) => {
+const parseMessage = (data) => {
   try {
-    const data = JSON.parse(message.data);
-    console.log({ data });
-    return data.value;
+    const parsedData = JSON.parse(data);
+    console.log({ parsedData });
+    return { [parsedData.type]: parsedData.value };
   } catch (error) {
-    console.error({ message }, error);
+    console.error({ data }, error);
     return {};
   }
 };

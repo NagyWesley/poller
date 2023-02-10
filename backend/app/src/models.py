@@ -2,6 +2,7 @@ from typing import Optional
 from uuid import UUID
 from pydantic import BaseModel
 from ipaddress import IPv4Address
+from .enums import MessageType
 
 
 class ConnectionsCount(BaseModel):
@@ -9,7 +10,7 @@ class ConnectionsCount(BaseModel):
 
 
 class Event(BaseModel):
-    type: str
+    type: MessageType
     value: BaseModel
 
 

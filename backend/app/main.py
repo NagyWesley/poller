@@ -13,23 +13,21 @@ questions = dict()
 
 
 def handle_message(message):
+
     [type, value] = parse_message(message)
+    print(type, value)
 
 
 def parse_message(message):
-    if (message.type == MessageType.question):
-        id = UUID()
-        new_question = Question(
-            id=id, question=message.question, name=message.name)
-
-        print("new_question", new_question)
-        questions[id] = new_question
-        print(questions)
+    event = json.loads(message)
+    print(event)
+    return parse_message(event)
 
 
 def broadcast_connection_count():
     count = ConnectionsCount(count=len(clients))
-    message = Event(type=MessageType.count, value=count)
+    print(MessageType.connection_count_change, count)
+    message = Event(type=MessageType.connection_count_change, value=count)
 
     return websockets.broadcast(
         connected, json.dumps(message.dict())
@@ -43,7 +41,7 @@ def client_connect(websocket):
     broadcast_connection_count()
 
 
-def clieent_disconnect(websocket):
+def client_disconnect(websocket):
     print(websocket.remote_address[0] + " disconnected")
     connected.remove(websocket)
     clients.remove(websocket.remote_address[0])
@@ -57,14 +55,17 @@ async def handler(websocket):
     while True:
         try:
             message = await websocket.recv()
+            print("message", message)
             # handle message
             handle_message(message)
             print("message received")
         except websockets.ConnectionClosedOK:
-            clieent_disconnect(websocket)
+            print("connection closed")
+            client_disconnect(websocket)
             break
         except Exception as e:
-            clieent_disconnect(websocket)
+            print(str(e))
+            client_disconnect(websocket)
             break
         finally:
             broadcast_connection_count()

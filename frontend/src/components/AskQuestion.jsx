@@ -1,13 +1,10 @@
-import { useContext, useState } from "react";
-import { SocketContext } from "../Context";
+import { useState } from "react";
+import socket from "../utils/websocket";
 
 const Question = ({ setView, notify }) => {
-  const ctx = useContext(SocketContext);
   const [question, setQuestion] = useState("");
   const [name, setName] = useState("");
   const [errorText, setError] = useState("");
-
-  const { sendJsonMessage } = ctx?.socket;
 
   const handleChange = (e) => {
     if (e.target.name === "question") {
@@ -19,7 +16,7 @@ const Question = ({ setView, notify }) => {
 
   const sendQuestion = () => {
     if (question !== "") {
-      sendJsonMessage({ question, name });
+      // socket.send(JSON.stringify({ question, name }));
       setQuestion("");
       setName("");
       setError("");

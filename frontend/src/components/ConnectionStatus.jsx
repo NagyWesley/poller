@@ -1,34 +1,36 @@
-import { useState, useCallback, useEffect } from "react";
-import { ReadyState } from "react-use-websocket";
+import { useState, useEffect } from "react";
 
 import { parseMessage } from "../utils/parser";
-import { useContext } from "react";
-import { SocketContext } from "../Context";
+
+import socket from "../utils/websocket";
+
 const ConnectionStatus = () => {
-  const ctx = useContext(SocketContext);
-
   const [count, setCount] = useState(0);
-
-  const { lastMessage, readyState } = ctx?.socket;
+  const [state, setState] = useState("مغلق");
 
   useEffect(() => {
-    if (lastMessage !== null) {
-      const data = parseMessage(lastMessage);
-      setCount(data.count);
-    }
-  }, [lastMessage, setCount]);
+    socket.addEventListener("message", (event) => {
+      const message = parseMessage(event.data);
 
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: "يتم الاتصال",
-    [ReadyState.OPEN]: "مفتوح",
-    [ReadyState.CLOSING]: "يتم الاغلاق",
-    [ReadyState.CLOSED]: "مغلق",
-    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
-  }[readyState];
+      setCount(message["connection_count_change"].count);
+
+      setState("مفتوح");
+    });
+
+    socket.addEventListener("open", (event) => {
+      console.log("opened ");
+      setState("مفتوح");
+    });
+
+    socket.addEventListener("close", (event) => {
+      console.log("closed");
+      setState("مغلق");
+    });
+  }, []);
 
   return (
     <>
-      الاتصال: {connectionStatus}
+      الاتصال: {state}
       <b>متصلين: ({count})</b>
     </>
   );

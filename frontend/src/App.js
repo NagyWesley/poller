@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import ConnectionStatus from "./components/ConnectionStatus";
 import AskQuestion from "./components/AskQuestion";
-import ContextProvider from "./Context";
+
 import Question from "./components/Question";
 
 const questions = [
@@ -36,35 +36,30 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <ContextProvider>
-          <ConnectionStatus />
-          <button
-            className="main-btn"
-            onClick={() => {
-              view === "homepage"
-                ? setView("ask_question")
-                : setView("homepage");
+        <ConnectionStatus />
+        <button
+          className="main-btn"
+          onClick={() => {
+            view === "homepage" ? setView("ask_question") : setView("homepage");
+          }}
+        >
+          {view === "homepage" ? "أسأل" : "الأسئلة"}{" "}
+        </button>
+        {view === "ask_question" && (
+          <AskQuestion
+            setView={(toView) => setView(toView)}
+            notify={() => {
+              notify();
             }}
-          >
-            {view === "homepage" ? "أسأل" : "الأسئلة"}{" "}
-          </button>
-          {view === "ask_question" && (
-            <AskQuestion
-              setView={(toView) => setView(toView)}
-              notify={() => {
-                notify();
-              }}
-            />
-          )}
-          {view === "homepage" &&
-            questions
-              .sort((a, b) => {
-                return a.likes_count <= b.likes_count ? 1 : -1;
-              })
-              .map((question) => (
-                <Question key={question.id} data={question} />
-              ))}
-        </ContextProvider>
+          />
+        )}
+        {view === "homepage" &&
+          questions
+            .sort((a, b) => {
+              return a.likes_count <= b.likes_count ? 1 : -1;
+            })
+            .map((question) => <Question key={question.id} data={question} />)}
+
         <ToastContainer
           position="top-right"
           autoClose={5000}
