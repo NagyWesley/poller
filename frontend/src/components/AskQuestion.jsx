@@ -1,5 +1,6 @@
 import { useState } from "react";
 import socket from "../utils/websocket";
+import { messageType } from "../utils/enums";
 
 const Question = ({ setView, notify }) => {
   const [question, setQuestion] = useState("");
@@ -16,7 +17,11 @@ const Question = ({ setView, notify }) => {
 
   const sendQuestion = () => {
     if (question !== "") {
-      // socket.send(JSON.stringify({ question, name }));
+      const message = JSON.stringify({
+        type: messageType.question_asked,
+        value: { question, name },
+      });
+      socket.send(message);
       setQuestion("");
       setName("");
       setError("");
@@ -47,6 +52,7 @@ const Question = ({ setView, notify }) => {
         placeholder="اكتب اسمك لو اردت"
         value={name}
         onChange={handleChange}
+        style={{ height: "4vh" }}
       />
       <button
         className="main-btn"

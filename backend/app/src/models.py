@@ -1,8 +1,9 @@
 from typing import Optional
-from uuid import UUID
-from pydantic import BaseModel
+from uuid import UUID, uuid4
+from pydantic import BaseModel, Field
 from ipaddress import IPv4Address
 from .enums import MessageType
+from datetime import datetime
 
 
 class ConnectionsCount(BaseModel):
@@ -11,14 +12,15 @@ class ConnectionsCount(BaseModel):
 
 class Event(BaseModel):
     type: MessageType
-    value: BaseModel
+    value: dict
 
 
 class Question(BaseModel):
-    id: UUID
+    id: str = Field(default_factory=lambda: str(uuid4()))
     question: str
     name: Optional[str]
-    likes: set[IPv4Address] = []
+    likes: Optional[set[IPv4Address]] = []
+    created: datetime = Field(default_factory=lambda: str(datetime.now()))
 
 
 class Likes(BaseModel):

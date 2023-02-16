@@ -8,30 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 import ConnectionStatus from "./components/ConnectionStatus";
 import AskQuestion from "./components/AskQuestion";
 
-import Question from "./components/Question";
-
-const questions = [
-  {
-    id: "8defe052-2719-4e17-945d-9626085c7565",
-    likes_count: Math.round(20 * Math.random()), // temp
-    question:
-      " و كلام تاني كتير قوي لو اتكلمت كلام كتير يا ترى هيفرق ولا انت ماعندكش مشاكل علشان مليان بالنعمة",
-    name: "Nagy Wesley",
-    likes: [],
-  },
-  {
-    id: "44ba459b-d3f9-4c18-9584-1b8a7043919f",
-    likes_count: Math.round(20 * Math.random()), // temp
-    question: "please show me the glory",
-    name: "",
-    likes: [],
-  },
-];
+import QuestionsList from "./components/QuestionsList";
 
 function App() {
   const [view, setView] = useState("homepage");
 
   const notify = () => toast.success("تم، سيتم الموافقة علي السؤال");
+
+  const [questions, setQuestions] = useState({});
 
   return (
     <div className="App">
@@ -53,14 +37,11 @@ function App() {
             }}
           />
         )}
-        {view === "homepage" &&
-          questions
-            .sort((a, b) => {
-              return a.likes_count <= b.likes_count ? 1 : -1;
-            })
-            .map((question) => <Question key={question.id} data={question} />)}
+        {view === "homepage" && (
+          <QuestionsList questions={questions} setQuestions={setQuestions} />
+        )}
 
-        <ToastContainer
+        {/* <ToastContainer
           position="top-right"
           autoClose={5000}
           hideProgressBar={false}
@@ -71,7 +52,7 @@ function App() {
           draggable
           pauseOnHover
           theme="dark"
-        />
+        /> */}
       </header>
     </div>
   );

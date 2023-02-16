@@ -52,7 +52,8 @@ body {
 .main-btn {
   margin: 1vh 0 1vh 0;
   width: 30vw;
-  height: 3vh;
+  height: 4vh;
   border-radius: 6px;
   max-width: 120px;
+  font-size: larger;
 }

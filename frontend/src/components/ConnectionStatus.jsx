@@ -18,12 +18,10 @@ const ConnectionStatus = () => {
     });
 
     socket.addEventListener("open", (event) => {
-      console.log("opened ");
       setState("مفتوح");
     });
 
     socket.addEventListener("close", (event) => {
-      console.log("closed");
       setState("مغلق");
     });
   }, []);
@@ -31,7 +29,7 @@ const ConnectionStatus = () => {
   return (
     <>
       الاتصال: {state}
-      <b>متصلين: ({count})</b>
+      {/* <b>متصلين: ({count})</b> */}
     </>
   );
 };
